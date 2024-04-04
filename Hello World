@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "time"
+)
+
+const (
+    format = "02-01-2006 15:04:05"
+)
+
 
 func main() {
-	fmt.Println("Hello, World!")
+    now := time.Now().UTC()
+    fmt.Println("Hello, World!")
+    fmt.Println("UTC Time now : " , now.Format(format))
 }
