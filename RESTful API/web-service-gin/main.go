@@ -34,7 +34,8 @@ func getCasinos(c *gin.Context) {
     c.IndentedJSON(http.StatusOK, casinos)
 }
 
-// postCasinos adds a casino from JSON received in the request body.
+// postCasinos adds a new casino from JSON received in the request body
+// to the list of existing casinos.
 func postCasinos(c *gin.Context) {
     var newCasino casino
 
@@ -49,7 +50,8 @@ func postCasinos(c *gin.Context) {
 }
 
 // getCasinoByID locates the casino whose ID value matches the id
-//parameter sent by the client, then returns that casino as a response.
+// parameter sent in the URL path by the client, then returns that
+// casino as a response.
 func getCasinoByID(c *gin.Context) {
     id := c.Param("id")
 
