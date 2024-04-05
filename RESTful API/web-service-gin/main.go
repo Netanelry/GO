@@ -23,6 +23,7 @@ var casinos = []casino{
 func main() {
     router := gin.Default()
     router.GET("/casinos", getCasinos)
+    router.GET("/casinos/:id", getCasinoByID)
     router.POST("/casinos", postCasinos)
 
     router.Run("localhost:8080")
@@ -45,4 +46,20 @@ func postCasinos(c *gin.Context) {
     // Add the new casino to the slice.
     casinos = append(casinos, newCasino)
     c.IndentedJSON(http.StatusCreated, newCasino)
+}
+
+// getCasinoByID locates the casino whose ID value matches the id
+//parameter sent by the client, then returns that casino as a response.
+func getCasinoByID(c *gin.Context) {
+    id := c.Param("id")
+
+    // Loop over the list of casinos, looking for
+    // a casino whose ID value matches the parameter.
+    for _, a := range casinos {
+        if a.ID == id {
+            c.IndentedJSON(http.StatusOK, a)
+            return
+        }
+    }
+    c.IndentedJSON(http.StatusNotFound, gin.H{"message": "casino not found"})
 }
