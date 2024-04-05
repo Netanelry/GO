@@ -23,6 +23,7 @@ var casinos = []casino{
 func main() {
     router := gin.Default()
     router.GET("/casinos", getCasinos)
+    router.POST("/casinos", postCasinos)
 
     router.Run("localhost:8080")
 }
@@ -30,4 +31,18 @@ func main() {
 // getCasinos responds with the list of all casinos as JSON.
 func getCasinos(c *gin.Context) {
     c.IndentedJSON(http.StatusOK, casinos)
+}
+
+// postCasinos adds a casino from JSON received in the request body.
+func postCasinos(c *gin.Context) {
+    var newCasino casino
+
+    // Call BindJSON to bind the received JSON to newCasino.
+    if err := c.BindJSON(&newCasino); err != nil {
+        return
+    }
+
+    // Add the new casino to the slice.
+    casinos = append(casinos, newCasino)
+    c.IndentedJSON(http.StatusCreated, newCasino)
 }
